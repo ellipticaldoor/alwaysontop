@@ -26,6 +26,7 @@ function _gototop_bash {
     # go to the top of the screen and clear in both directions
     # zsh seems to have very strong opinions about redrawing all of the screen
     # when this is called
+    tput clear
     tput cup 0 0 
     tput el 
     tput el1
