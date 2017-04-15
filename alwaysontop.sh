@@ -31,7 +31,6 @@ function _gototop_bash {
 
 
 function alwaysontop {
-    PS1=`perl -e '$newps1 = $ENV{"PS1"}; $newps1 =~ s/\Q$ENV{"ALWAYSONTOP_INDICATOR"}//; print $newps1'`
     if [[ "$ALWAYSONTOP" != "TRUE" ]]
     then
         if [[ "$SHELL" == *"bash"* ]]
@@ -52,7 +51,6 @@ function alwaysontop {
             add-zsh-hook precmd _gototop_zsh
         fi
 
-        # PS1="$ALWAYSONTOP_INDICATOR$PS1"
         # PS1="$PS1"
     fi
 
@@ -74,9 +72,6 @@ function unalwaysontop {
             add-zsh-hook -d precmd _gototop_zsh
         fi
         ALWAYSONTOP="FALSE"
-
-       # use some perl to remove the indicator, because I suck at sed
-        PS1=`perl -e '$newps1 = $ENV{"PS1"}; $newps1 =~ s/\Q$ENV{"ALWAYSONTOP_INDICATOR"}//; print $newps1'`
     fi
 
     # echo -e "[alwaysontop.sh] ${COLOR_BIPurple}always on top${COLOR_off} ${COLOR_BRed}OFF${COLOR_off}."
@@ -102,7 +97,6 @@ function autoclear {
             zle -N accept-line
 
         fi
-        PS1="$AUTOCLEAR_INDICATOR$PS1"
 
     fi
 
@@ -128,8 +122,6 @@ function unautoclear {
     else
         zle -A original-accept-line accept-line
     fi
-
-    PS1=`perl -e '$newps1 = $ENV{"PS1"}; $newps1 =~ s/\Q$ENV{"AUTOCLEAR_INDICATOR"}//; print $newps1'`
 
     unalias "cd"
     renavigate
@@ -269,13 +261,6 @@ else
     echo "Sorry, only bash and zsh are supported." > /dev/stderr
     return 1
 fi
-
-
-## the custom indicators
-export AUTOCLEAR_INDICATOR="${PROMPT_COLOR_BIoff}◎${PROMPT_COLOR_off} "
-
-#export AUTOCLEAR_INDICATOR="@@ "
-
 
 
 if [[ "$BASH_SOURCE" == "$0" ]]
